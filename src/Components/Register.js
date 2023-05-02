@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom/client';
+//import ReactDOM from 'react-dom/client';
 import { Link } from "react-router-dom";
 import Sidebar from "./Sidebar"
 
@@ -8,11 +8,56 @@ function Register() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
-  //const [msg, setMsg] = useState("");
+  const [cpassword, setCpassword] = useState("");
+
+  const [msg, setMsg] = useState("");
+
+  const [nameError, setNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [phoneError, setPhoneError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [cpasswordError, setCpasswordError] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    //alert(`The name you entered was: ${name}`)
+
+	let error = ''; 
+	if(name === ''){
+		error += 'name is mondatory';
+		 setNameError(error);
+		//alert('name is mondatory');
+		return false;
+	}else if(email === ''){
+		error += 'email is mondatory';
+		 setEmailError(error);
+		//alert('email is mondatory');
+		return false;
+	}else if(phone === ''){
+		error += 'phone is mondatory';
+		 setPhoneError(error);
+		//alert('phone is mondatory');
+		return false;
+	}else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)){
+		error += 'You have entered an invalid email address!';
+		 setEmailError(error);
+		//alert("You have entered an invalid email address!");
+		return false;
+	}else if(password === ''){
+		error += 'password is mondatory';
+		 setPasswordError(error);
+		//alert('phone is mondatory');
+		return false;
+	}else if(cpassword === ''){
+		error += 'confirmed password is mondatory';
+		 setCpasswordError(error);
+		//alert('phone is mondatory');
+		return false;
+	}else if(cpassword !== password){
+		error += 'password did not matched';
+		 setCpasswordError(error);
+		//alert('phone is mondatory');
+		return false;
+	}
 
 	// POST request using fetch inside useEffect React hook
 	const requestOptions = {
@@ -31,32 +76,18 @@ function Register() {
                 return Promise.reject(error);
             }
             //this.setMsg({ msg: data.message })
+			setMsg('Account created successfully');
 			console.log('success');
         })
 		.catch(error => {
             //this.setState({ errorMessage: error.toString() });
             //setMsg({ errorMessage: error.toString() });
             //console.error('There was an error!', error);
+			setMsg('something went wrong');
 			console.log('error');
         });
         
   }
-
-  /* useEffect(() => {
-	// POST request using fetch inside useEffect React hook
-	const requestOptions = {
-		method: 'POST',
-		headers: { 'Content-Type': 'application/json' },
-		//headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-		//body: JSON.stringify({ title: 'React Hooks POST Request Example' })
-		body: JSON.stringify({ name: 'ccc', email: 'ccc@gmail.com', phone: '777777777' })
-	};
-	fetch('http://localhost:3001/customers/', requestOptions)
-		.then(response => response.json())
-		.then(data => data.id);
-
-// empty dependency array means this effect will only run once (like componentDidMount in classes)
-}, []); */
 
   return (
 		<div>
@@ -74,7 +105,7 @@ function Register() {
 
 				<article>
 					<Link to="/">Back</Link>
-					<h1>Sign Up</h1>
+					<h1>Sign Up : {msg}</h1>
 					<form onSubmit={handleSubmit}>
 					<label>Enter your name:
 						<input 
@@ -82,7 +113,7 @@ function Register() {
 						type="text" 
 						value={name}
 						onChange={(e) => setName(e.target.value)}
-						/>
+						/><span className="mondatory">{nameError}</span>
 					</label>
 					<br /><br />
 					<label>Enter your Email:
@@ -91,7 +122,7 @@ function Register() {
 						type="text" 
 						value={email}
 						onChange={(e) => setEmail(e.target.value)}
-						/>
+						/><span className="mondatory">{emailError}</span>
 					</label>
 					<br /><br />
 					<label>Enter your Phone:
@@ -100,7 +131,7 @@ function Register() {
 						type="text" 
 						value={phone}
 						onChange={(e) => setPhone(e.target.value)}
-						/>
+						/><span className="mondatory">{phoneError}</span>
 					</label>
 					<br /><br />
 					<label>Enter your Password:
@@ -109,7 +140,16 @@ function Register() {
 						type="password" 
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
-						/>
+						/><span className="mondatory">{passwordError}</span>
+					</label>
+					<br /><br />
+					<label>Enter your Password:
+						<input 
+						name="cpassword" 
+						type="password" 
+						value={cpassword}
+						onChange={(e) => setCpassword(e.target.value)}
+						/><span className="mondatory">{cpasswordError}</span>
 					</label>
 					<br /><br />
 					<input type="submit" />

@@ -8,6 +8,7 @@ import About from "./Components/About";
 import Contact from "./Components/Contact";
 import Dashboard from "./Components/Dashboard";
 import Customers from "./Components/Customers";
+import EditCustomer from "./Components/EditCustomer";
 import Logout from "./Components/Logout";
 import NotFound from "./Components/NotFound";
 import Layout from "./Components/Layout";
@@ -24,6 +25,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/customers" element={<Customers />} />
+          <Route path="/editcustomer/:id" element={<EditCustomer />} />
 		      <Route path="/logout" element={<Logout />} />
 		      <Route path="/layout" element={<Layout />} />
           <Route path="*"  element={<NotFound />} />

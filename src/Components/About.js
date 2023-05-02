@@ -3,7 +3,9 @@ import { Link, Navigate } from "react-router-dom";
 import Sidebar from './Sidebar';
 
 function About() {
-	//return <Navigate to="/products" />
+	return <Navigate to="/products" />;
+	// <Link to={`/editcustomer/${customer.id}`} className="btn btn-info"> Edit </Link>
+	// <Link to={"/editcustomer/"+customer.id} className="btn btn-info"> Edit </Link>
     return (
         
 		<div>
